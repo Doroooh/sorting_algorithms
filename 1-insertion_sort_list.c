@@ -3,9 +3,9 @@
 void swap(listint_t **head, listint_t *node1, listint_t *node2);
 /**
  * insertion_sort_list - sorting doubly linked list with
- * an insertion sort algorithm
+ * insertion sort algorithm
  *
- * @list: list to sort
+ * @list: list to  sort
  *
  * Return: void
  */
@@ -13,10 +13,10 @@ void insertion_sort_list(listint_t **list)
 {
 	listint_t *forw, *tmp;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	if (list == NULL || *list == NULL || (*list)->nextvalue == NULL)
 		return;
 
-	for (forw = (*list)->nextvalue; forw && forw->prev; forw = forw->nextvalue)
+	for (forw = (*list)->nextvalue; forw && forw->prevvalue; forw = forw->nextvalue)
 	{
 		for (; forw && forw->prevvalue && forw->n < forw->prevvalue->n;
 		     forw = forw->prevvalue)
@@ -30,8 +30,8 @@ void insertion_sort_list(listint_t **list)
 }
 
 /**
- * swap - this will swap two nodes
- * @head:  head node
+ * swap - swap two nodes
+ * @head: head node
  * @node1: first node
  * @node2: second node
  *
@@ -52,6 +52,6 @@ void swap(listint_t **head, listint_t *node1, listint_t *node2)
 	node1->nextvalue = nextvalue;
 	node2->prevvalue = prevvalue;
 	node2->nextvalue = node1;
-	if (next)
+	if (nextvalue)
 		nextvalue->prevvalue = node1;
 }
