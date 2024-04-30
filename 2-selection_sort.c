@@ -1,29 +1,29 @@
 #include "sort.h"
 /**
-  * selection_sort - selection sort algorithm
-  * @array: array to sort
-  * @size: size of array
+  * selection_sort - select the sort algorithm
+  * @array: array to be sorted
+  * @size: size of an array
   */
 void selection_sort(int *array, size_t size)
 {
-	size_t i, i2;
+	size_t l, l2;
 	int min, tmp, idx;
 
-	for (i = 0; i < size; i++)
+	for (l = 0; l < size; l++)
 	{
-		min = array[i];
-		for (i2 = i + 1; i2 < size; i2++)
+		min = array[l];
+		for (l2 = l + 1; l2 < size; l2++)
 		{
-			if (min > array[i2])
+			if (min > array[l2])
 			{
-				min = array[i2];
-				idx = i2;
+				min = array[l2];
+				idx = l2;
 			}
 		}
-		if (min != array[i])
+		if (min != array[l])
 		{
-			tmp = array[i];
-			array[i] = min;
+			tmp = array[l];
+			array[l] = min;
 			array[idx] = tmp;
 			print_array(array, size);
 		}
