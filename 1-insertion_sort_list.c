@@ -1,57 +1,57 @@
-#include "sort.h"
+#include "custom_sort.h"
 
-void swap(listint_t **head, listint_t *node1, listint_t *node2);
 /**
- * insertion_sort_list - sorts a doubly linked list with
- * the insertion sort algorithm
- *
- * @list: list to be sorted
+ * custom_swap - swaps two nodes in a doubly linked list
+ * @head: pointer to the head of the list
+ * @node1: pointer to the first node
+ * @node2: pointer to the second node
  *
  * Return: void
  */
-void insertion_sort_list(listint_t **list)
+void custom_swap(listint_t **head, listint_t *node1, listint_t *node2)
 {
-	listint_t *forw, *tmp;
+    listint_t *prev_node1, *next_node2;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
-		return;
+    prev_node1 = node1->prev;
+    next_node2 = node2->next;
 
-	for (forw = (*list)->next; forw && forw->prev; forw = forw->next)
-	{
-		for (; forw && forw->prev && forw->n < forw->prev->n;
-		     forw = forw->prev)
-		{
-			tmp = forw->prev;
-			swap(list, tmp, forw);
-			print_list(*list);
-			forw = forw->next;
-		}
-	}
+    if (prev_node1 != NULL)
+        prev_node1->next = node2;
+    else
+        *head = node2;
+
+    node1->prev = node2;
+    node1->next = next_node2;
+    node2->prev = prev_node1;
+    node2->next = node1;
+
+    if (next_node2 != NULL)
+        next_node2->prev = node1;
 }
 
 /**
- * swap - swaps two nodes
- * @head: the head node
- * @node1: The first node
- * @node2: the second node
+ * custom_insertion_sort_list - sorts a doubly linked list using
+ * the insertion sort algorithm
+ *
+ * @list: pointer to the head of the list
  *
  * Return: void
  */
-void swap(listint_t **head, listint_t *node1, listint_t *node2)
+void custom_insertion_sort_list(listint_t **list)
 {
-	listint_t *prev, *next;
+    listint_t *forward, *tmp;
 
-	prev = node1->prev;
-	next = node2->next;
+    if (list == NULL || *list == NULL || (*list)->next == NULL)
+        return;
 
-	if (prev != NULL)
-		prev->next = node2;
-	else
-		*head = node2;
-	node1->prev = node2;
-	node1->next = next;
-	node2->prev = prev;
-	node2->next = node1;
-	if (next)
-		next->prev = node1;
+    for (forward = (*list)->next; forward != NULL && forward->prev != NULL; forward = forward->next)
+    {
+        for (; forward != NULL && forward->prev != NULL && forward->n < forward->prev->n; forward = forward->prev)
+        {
+            tmp = forward->prev;
+            custom_swap(list, tmp, forward);
+            print_list(*list);
+            forward = forward->next;
+        }
+    }
 }
