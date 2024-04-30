@@ -1,41 +1,43 @@
-#include <stdio.h>
 #include "sort.h"
 
 /**
- * bubble_sort - sorts an array of integers in ascending order using Bubble sort
- * algorithm
- * @array: array of integers to be sorted
+ * custom_bubble_sort - sorting an array of integers in an ascending order
+ * using a modified Bubble sort algorithm
+ * @arr: Array to sort
  * @size: size of the array
+ *
+ * Return: Void
  */
-void bubble_sort(int *array, size_t size)
+void custom_bubble_sort(int *arr, size_t size)
 {
-    size_t i, j;
-    int temp;
-    int swapped;
+	size_t i, j, size2 = size;
+	int temp, sorted = 0;
 
-    if (!array || size < 2)
-        return;
+	if (arr == NULL || size < 2)
+		return;
 
-    for (i = 0; i < size - 1; i++)
-    {
-        swapped = 0; // Flag to check if any swapping occurred in this pass
+	for (i = 0; i < size; i++)
+	{
+		for (j = 1; j < size2; j++)
+		{
+			if (arr[j - 1] > arr[j])
+			{
+				sorted = 1;
+				temp = arr[j];
+				arr[j] = arr[j - 1];
+				arr[j - 1] = temp;
+				print_array(arr, size);
+			}
+		}
 
-        for (j = 0; j < size - i - 1; j++)
-        {
-            if (array[j] > array[j + 1])
-            {
-                // Swap array[j] and array[j+1]
-                temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
-                swapped = 1; // Set flag to indicate swapping occurred
-                print_array(array, size);
-            }
-        }
+		// If there is no swapping,  array  already sorted
+		if (!sorted)
+			break;
 
-        // If no two elements were swapped by the inner loop, then break
-        if (swapped == 0)
-            break;
-    }
+		// Reset sorted flag
+		sorted = 0;
+
+		// Decrease size for optimization
+		size2--;
+	}
 }
-
