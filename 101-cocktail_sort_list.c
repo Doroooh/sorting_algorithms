@@ -44,7 +44,7 @@ void cocktail_sort_list(listint_t **list)
 		swapped_f = swapped_b = false;
 		for (checks = 0; temp->nextvalue && checks < shake_range; checks++)
 		{
-			if (temp->nextvalue->v < temp->v)
+			if (temp->nextvalue->n < temp->n)
 			{
 				dll_adj_swap(list, temp, temp->nextvalue);
 				swapped_f = true;
@@ -59,7 +59,7 @@ void cocktail_sort_list(listint_t **list)
 		shake_range--;
 		for (checks = 0; temp->prevvalue && checks < shake_range; checks++)
 		{
-			if (temp->v < temp->prevvalue->v)
+			if (temp->n < temp->prevvalue->n)
 			{
 				dll_adj_swap(list, temp->prevvalue, temp);
 				swapped_b = true;
