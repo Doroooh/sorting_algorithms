@@ -1,71 +1,71 @@
-#include "sorting.h"
+#include "sort.h"
 
 /**
- * split - divides an array into two parts based on a pivot value, and then
- * rearranges the elements such that elements smaller than the pivot are on
- * the left and elements greater than or equal to the pivot are on the right.
- * @arr: array of integers to be sorted
- * @start: starting index of the partition
- * @end: ending index of the partition
- * @size: size of the array
- * Return: the index of the pivot element after partitioning
+ * partition - scanning  partition of  array of integers for values less than
+ * pivot value, and swaps it with the first value in partition, then swaps pivot
+ * value with first value in the partition
+ * @array: array of integers to sort
+ * @low: index in array  beginning the partition
+ * @high: index in array  ending the  partition
+ * @size: amount of elements in the array
+ * Return: new index where to start new recursive partition
  */
-int split(int *arr, int start, int end, size_t size)
+int partition(int *array, int low, int high, size_t size)
 {
-	int i, j, pivot, temp;
+	int k, l, pivot, temp;
 
-	pivot = arr[end];
-	i = start;
-	for (j = start; j < end; j++)
+	pivot = array[high];
+	k = low;
+	for (l = low; l < high; l++)
 	{
-		if (arr[j] < pivot)
+		if (array[l] < pivot)
 		{
-			temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
-			if (arr[i] != arr[j])
-				print_array(arr, size);
-			i++;
+			temp = array[k];
+			array[k] = array[l];
+			array[l] = temp;
+			if (array[k] != array[l])
+				print_array(array, size);
+			k++;
 		}
 	}
-	temp = arr[i];
-	arr[i] = arr[end];
-	arr[end] = temp;
-	if (arr[i] != arr[end])
-		print_array(arr, size);
-	return (i);
+	temp = array[k];
+	array[k] = array[high];
+	array[high] = temp;
+	if (array[k] != array[high])
+		print_array(array, size);
+	return (k);
 }
 
 /**
- * recursive_sort - recursively sorts an array of integers using the
- * quicksort algorithm
- * @arr: array of integers to be sorted
- * @start: starting index of the partition
- * @end: ending index of the partition
- * @size: size of the array
+ * quicksort - this recursively sorts the array of integers separating into two
+ * partitions, using the Lomuto quick sort
+ * @array: the array of integers to sort
+ * @low: index in array which will  begin partition
+ * @high: index in array which will ends the partition
+ * @size: amount of elements in array
  */
-void recursive_sort(int *arr, int start, int end, size_t size)
+void quicksort(int *array, int low, int high, size_t size)
 {
-	int pivot;
+	int v;
 
-	if (start < end)
+	if (low < high)
 	{
-		pivot = split(arr, start, end, size);
-		recursive_sort(arr, start, pivot - 1, size);
-		recursive_sort(arr, pivot + 1, end, size);
+		v = partition(array, low, high, size);
+		quicksort(array, low, v - 1, size);
+		quicksort(array, v + 1, high, size);
 	}
 }
 
 /**
- * quick_sort - sorts an array of integers in ascending order using the
- * quicksort algorithm
- * @arr: array of integers to be sorted
- * @size: size of the array
+ * quick_sort - sorting an array of integers in an ascending order with the quick
+ * sort algorithm, with Lomuto partition scheme
+ * @array: array of integers to sort
+ * @size: amount of elements in array
  */
-void quick_sort(int *arr, size_t size)
+void quick_sort(int *array, size_t size)
 {
-	if (!arr || size < 2)
+	if (!array || size < 2)
 		return;
 
-	recursive_sort(arr, 0, (int)size - 1, size);
+	quicksort(array, 0, (int)size - 1, size);
 }
