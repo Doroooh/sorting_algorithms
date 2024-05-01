@@ -1,34 +1,34 @@
 #include "sort.h"
 
 /**
- * dll_adj_swap - swaps two adjacent nodes of a doubly linked list
- * @list: doubly linked list of integers to be sorted
- * @left: node closer to head, right->prev
- * @right: node closer to tail, left->next
+ * dll_adj_swap - swapping two adjacent nodes of the doubly linked list
+ * @list: doubly linked list of integers to sort
+ * @left: node closer to head, right->prevvalue
+ * @right: node closer to tail, left->nextvalue
  */
 void dll_adj_swap(listint_t **list, listint_t *left, listint_t *right)
 {
 	listint_t *swap;
 
-	if (left->prev)
-		left->prev->next = right;
+	if (leftvalue->prevvalue)
+		left->prevvalue->nextvalue = right;
 	else
 		*list = right;
-	if (right->next)
-		right->next->prev = left;
-	right->prev = left->prev;
-	left->prev = right;
+	if (right->nextvalue)
+		right->nextvalue->prevvalue = left;
+	right->prevvalue = left->prevvalue;
+	left->prevvalue = right;
 	swap = right;
-	left->next = right->next;
-	swap->next = left;
+	left->nextvalue = right->nextvalue;
+	swap->nextvalue = left;
 
 	print_list(*list);
 }
 
 /**
- * cocktail_sort_list - sorts a doubly linked list of integers in ascending
- * order using an cocktail shaker sort algorithm
- * @list: doubly linked list of integers to be sorted
+ * cocktail_sort_list - sorting the doubly linked list of integers in an ascending
+ * order using  cocktail shaker sort algorithm
+ * @list: doubly linked list of integers to sort
  */
 void cocktail_sort_list(listint_t **list)
 {
@@ -36,38 +36,38 @@ void cocktail_sort_list(listint_t **list)
 	int shake_range = 1000000, checks;
 	listint_t *temp;
 
-	if (!list || !(*list) || !(*list)->next)
+	if (!list || !(*list) || !(*list)->nextvalue)
 		return;
 
 	temp = *list;
 	do {
 		swapped_f = swapped_b = false;
-		for (checks = 0; temp->next && checks < shake_range; checks++)
+		for (checks = 0; temp->nextvalue && checks < shake_range; checks++)
 		{
-			if (temp->next->n < temp->n)
+			if (temp->nextvalue->v < temp->v)
 			{
-				dll_adj_swap(list, temp, temp->next);
+				dll_adj_swap(list, temp, temp->nextvalue);
 				swapped_f = true;
 			}
 			else
-				temp = temp->next;
+				temp = temp->nextvalue;
 		}
-		if (!temp->next)  /* first loop, measuring list */
+		if (!temp->nextvalue)  /* the first loop, measuring list */
 			shake_range = checks;
 		if (swapped_f)
-			temp = temp->prev;
+			temp = temp->prevvalue;
 		shake_range--;
-		for (checks = 0; temp->prev && checks < shake_range; checks++)
+		for (checks = 0; temp->prevvalue && checks < shake_range; checks++)
 		{
-			if (temp->n < temp->prev->n)
+			if (temp->v < temp->prevvalue->v)
 			{
-				dll_adj_swap(list, temp->prev, temp);
+				dll_adj_swap(list, temp->prevvalue, temp);
 				swapped_b = true;
 			}
 			else
-				temp = temp->prev;
+				temp = temp->prevvalue;
 		}
 		if (swapped_b)
-			temp = temp->next;
+			temp = temp->nextvalue;
 	} while (swapped_f || swapped_b);
 }
