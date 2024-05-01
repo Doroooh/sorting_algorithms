@@ -1,41 +1,41 @@
 #include "sort.h"
 
 /**
- * shell_sort - sorts an array of integers in ascending order using a shell
- * sort algorithm, with gap sizes determined by a decreasing Knuth seqeuence
- * @array: array of integers to be sorted
- * @size: amount of elements in array
+ * shell_sort - sorting array of integers in  an ascending order using a shell
+ * sort algorithm, with the gap sizes determined by a decreasing Knuth seqeuence
+ * @array: array of integers to  sort
+ * @size: amount of elements in the array
  */
 void shell_sort(int *array, size_t size)
 {
-	int i, j, gap, n, Knuth_max, temp;
+	int k, l, gap, v, Knuth_max, temp;
 
 	if (!array || size < 2)
 		return;
 
-	n = (int)size;
-	for (gap = 1; gap < n; gap = (gap * 3) + 1)
+	v = (int)size;
+	for (gap = 1; gap < v; gap = (gap * 3) + 1)
 	{
 		Knuth_max = gap;
 	}
-/* Start with the largest Knuth seq value less than n as gap, */
-/* and work down sequence to a gap of 1 */
+/* Starting with the largest Knuth sequence value less than v as gap, */
+/* and working down the sequence to a gap of 1 */
 	for (gap = Knuth_max; gap > 0; gap = (gap - 1) / 3)
 	{
-		/* Do a gapped insertion sort for this gap size. */
-		for (i = gap; i < n; i++)
+		/* A gapped insertion sort for the gap size. */
+		for (k = gap; k < v; k++)
 		{
-			/* add array[i] to gap sorted elements; */
-			/* save array[i] in temp in preparation to overwrite */
-			temp = array[i];
-			/* shift earlier gap-sorted elements up until the */
-			/* correct location for array[i] is found */
-			for (j = i; j >= gap && array[j - gap] > temp; j -= gap)
+			/* adding an array[k] to gap sorted elements; */
+			/* saving array[k] in temp in preparation to overwrite */
+			temp = array[k];
+			/* shifting the earlier gap-sorted elements up until the */
+			/* correct location for array[k] is found */
+			for (l = k; l >= gap && array[l - gap] > temp; l -= gap)
 			{
-				array[j] = array[j - gap];
+				array[l] = array[l - gap];
 			}
-/* temp original array[i]) to its correct location */
-			array[j] = temp;
+/* temp original array[k]) to its correct location */
+			array[l] = temp;
 		}
 		print_array(array, size);
 	}
